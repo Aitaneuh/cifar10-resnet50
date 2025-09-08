@@ -57,45 +57,42 @@ if uploaded_file:
 # ----------------------------
 # Prediction and visualization
 # ----------------------------
-if st.checkbox("Show debug visuals"):
-        first_layer = F.relu(model.conv1(tensor)).squeeze(0).cpu().detach().numpy()  # [64,32,32]
-        num_features = min(32, first_layer.shape[0])
-        cols = 8
-        rows = int(np.ceil(num_features / cols))
+if uploaded_file and st.checkbox("Show debug visuals"):
+    first_layer = F.relu(model.conv1(tensor)).squeeze(0).cpu().detach().numpy()  # [64,32,32]
+    num_features = min(32, first_layer.shape[0])
+    cols = 8
+    rows = int(np.ceil(num_features / cols))
 
-        fig = plt.figure(figsize=(12, 8))
-        gs = fig.add_gridspec(2, 2, height_ratios=[1, 2])
+    fig = plt.figure(figsize=(12, 8))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1, 2])
 
-        # Image
-        ax1 = fig.add_subplot(gs[0,0])
-        ax1.imshow(img.resize((32,32)))
-        ax1.set_title("Input image (32x32)")
-        ax1.axis("off")
+    ax1 = fig.add_subplot(gs[0,0])
+    ax1.imshow(np.array(img.resize((32,32))))
+    ax1.set_title("Input image (32x32)")
+    ax1.axis("off")
 
-        # Probabilities
-        ax2 = fig.add_subplot(gs[0,1])
-        ax2.bar(range(10), probs)
-        ax2.set_xticks(range(10))
-        ax2.set_xticklabels(classes, rotation=45)
-        ax2.set_ylabel("Probability")
-        ax2.set_title("Prediction probabilities")
+    ax2 = fig.add_subplot(gs[0,1])
+    ax2.bar(range(10), probs)
+    ax2.set_xticks(range(10))
+    ax2.set_xticklabels(classes, rotation=45)
+    ax2.set_ylabel("Probability")
+    ax2.set_title("Prediction probabilities")
 
-        # Feature maps
-        ax3 = fig.add_subplot(gs[1, :])
-        ax3.set_title("First Conv Layer Feature Maps")
-        ax3.axis("off")
+    ax3 = fig.add_subplot(gs[1, :])
+    ax3.set_title("First Conv Layer Feature Maps")
+    ax3.axis("off")
 
-        for i in range(num_features):
-            row_idx = i // cols
-            col_idx = i % cols
-            ax_inset = ax3.inset_axes((
-                col_idx / cols,
-                1 - (row_idx + 1) / rows,
-                1 / cols,
-                1 / rows
-            ))
-            ax_inset.imshow(first_layer[i].cpu().detach().numpy(), cmap="gray")
-            ax_inset.axis("off")
+    for i in range(num_features):
+        row_idx = i // cols
+        col_idx = i % cols
+        ax_inset = ax3.inset_axes((
+            col_idx / cols,
+            1 - (row_idx + 1) / rows,
+            1 / cols,
+            1 / rows
+        ))
+        ax_inset.imshow(first_layer[i], cmap="gray")
+        ax_inset.axis("off")
 
-        plt.tight_layout()
-        st.pyplot(fig)
+    plt.tight_layout()
+    st.pyplot(fig)
