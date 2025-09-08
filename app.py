@@ -58,7 +58,7 @@ if uploaded_file:
 # Prediction and visualization
 # ----------------------------
 if st.checkbox("Show debug visuals"):
-        first_layer = F.relu(model.conv1(tensor)).squeeze(0)  # [64,32,32]
+        first_layer = F.relu(model.conv1(tensor)).squeeze(0).cpu().detach().numpy()  # [64,32,32]
         num_features = min(32, first_layer.shape[0])
         cols = 8
         rows = int(np.ceil(num_features / cols))
