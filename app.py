@@ -44,7 +44,7 @@ transform = transforms.Compose([
 
 if uploaded_file:
     img = Image.open(uploaded_file).convert("RGB")
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+    st.image(img, caption="Uploaded Image", use_container_width=True)
     tensor = transform(img).unsqueeze(0).to(device) # type: ignore
     with torch.no_grad():
         output = model(tensor)
