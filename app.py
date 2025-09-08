@@ -30,7 +30,7 @@ st.write("upload an image to see the prediction.")
 # ----------------------------
 # Image upload
 # ----------------------------
-uploaded_file = st.file_uploader("Or upload a digit image", type=["png", "jpg", "jpeg", "webp"])
+uploaded_file = st.file_uploader("", type=["png", "jpg", "jpeg", "webp"])
 
 # ----------------------------
 # Process image
