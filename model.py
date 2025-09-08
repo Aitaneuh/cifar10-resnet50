@@ -1,10 +1,5 @@
-## Original GitHub: https://github.com/kuangliu/pytorch-cifar 
-
-
-
-'''ResNet in PyTorch.
-
-For Pre-activation ResNet, see 'preact_resnet.py'.
+'''
+Original GitHub: https://github.com/kuangliu/pytorch-cifar 
 
 Reference:
 
