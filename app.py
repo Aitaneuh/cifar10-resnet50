@@ -94,7 +94,7 @@ if st.checkbox("Show debug visuals"):
                 1 / cols,
                 1 / rows
             ))
-            ax_inset.imshow(first_layer[i].cpu(), cmap="gray")
+            ax_inset.imshow(first_layer[i].cpu().detach().numpy(), cmap="gray")
             ax_inset.axis("off")
 
         plt.tight_layout()
